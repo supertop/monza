@@ -33,6 +33,9 @@ module Monza
           @renewal_info << RenewalInfo.new(renewal_info_attributes)
         end
       end
+      @latest_receipt_info.sort_by! do |transaction_receipt| 
+        transaction_receipt.expires_date
+      end
       @latest_receipt = attributes['latest_receipt']
     end
 

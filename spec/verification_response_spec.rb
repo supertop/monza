@@ -31,11 +31,13 @@ describe Monza::VerificationResponse do
     let(:verify) { described_class.new(response) }
 
     it 'latest_receipt_info' do
+      #expectation is that latest_receipt_info is sorted by expiry date, 
+      #so last should be the one with the date furthest in the future.
       latest_transaction = verify.latest_receipt_info.last
 
       expect(latest_transaction).not_to be_nil
       expect(latest_transaction.quantity).to eq 1
-      expect(latest_transaction.transaction_id).to eq '1000000218147500'
+      expect(latest_transaction.transaction_id).to eq '1000000218147501'
       expect(latest_transaction.original_transaction_id).to eq '1000000218147500'
       expect(latest_transaction.product_id).to eq 'com.example.product_id'
 
@@ -45,8 +47,8 @@ describe Monza::VerificationResponse do
       expect(latest_transaction.original_purchase_date).to eq DateTime.parse('2016-06-17 01:27:28 Etc/GMT')
       expect(latest_transaction.original_purchase_date_ms).to eq Time.zone.at("1466126848000".to_i / 1000)
 
-      expect(latest_transaction.expires_date).to eq DateTime.parse('2016-06-17 01:32:28 Etc/GMT')
-      expect(latest_transaction.expires_date_ms).to eq Time.zone.at("1466127148000".to_i / 1000)
+      expect(latest_transaction.expires_date).to eq DateTime.parse('2016-06-17 02:32:28 Etc/GMT')
+      expect(latest_transaction.expires_date_ms).to eq Time.zone.at("1466130748000".to_i / 1000)
 
       expect(latest_transaction.is_trial_period).to eq true
       expect(latest_transaction.cancellation_date).to be_nil
