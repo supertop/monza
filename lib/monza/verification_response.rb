@@ -33,12 +33,6 @@ module Monza
           @renewal_info << RenewalInfo.new(renewal_info_attributes)
         end
       end
-      @renewal_info = []
-      if attributes['pending_renewal_info']
-        attributes['pending_renewal_info'].each do |renewal_info_attributes|
-          @renewal_info << RenewalInfo.new(renewal_info_attributes)
-        end
-      end
       @latest_receipt = attributes['latest_receipt']
     end
 
