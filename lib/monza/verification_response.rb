@@ -19,9 +19,18 @@ module Monza
       @environment = attributes['environment']
       @receipt = Receipt.new(attributes['receipt'])
       @latest_receipt_info = []
-      if attributes['latest_receipt_info']
+      case attributes['latest_receipt_info']
+      when Array
         attributes['latest_receipt_info'].each do |transaction_receipt_attributes|
           @latest_receipt_info << TransactionReceipt.new(transaction_receipt_attributes)
+        end
+      when Hash
+        @latest_receipt_info << TransactionReceipt.new(attributes['latest_receipt_info'])
+      end
+      @renewal_info = []
+      if attributes['pending_renewal_info']
+        attributes['pending_renewal_info'].each do |renewal_info_attributes|
+          @renewal_info << RenewalInfo.new(renewal_info_attributes)
         end
       end
       @renewal_info = []
